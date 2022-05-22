@@ -1,23 +1,27 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using UserOperationCaseStudy.Application;
 using UserOperationCaseStudy.Common.Extensions;
 using UserOperationCaseStudy.Persistence;
+using UserOperationCaseStudy.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
 builder.Host.ConfigureContainer<ContainerBuilder>(build =>
 {
-    build.RegisterModule(new ApplicationRegistrationModule());
     build.RegisterModule(new PersistenceRegistrationModule(builder.Configuration));
+    build.RegisterModule(new ApplicationRegistrationModule());
 });
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
+
 
 var app = builder.Build();
 

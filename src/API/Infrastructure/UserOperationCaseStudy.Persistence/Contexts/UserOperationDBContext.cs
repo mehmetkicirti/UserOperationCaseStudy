@@ -16,14 +16,21 @@ namespace UserOperationCaseStudy.Persistence.Contexts
         public UserOperationDBContext()
         {
         }
+
         public UserOperationDBContext(IConfiguration configuration)
         {
             _iConfiguration = configuration;
         }
+
+        public UserOperationDBContext(DbContextOptions options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            string sqlServerConnectionString = _iConfiguration.GetConnectionString("DefaultConnection");
             // NOTE => if you want to migrate db, you need to assign as direct connection string.
-            optionsBuilder.UseSqlServer(_iConfiguration.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer(sqlServerConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

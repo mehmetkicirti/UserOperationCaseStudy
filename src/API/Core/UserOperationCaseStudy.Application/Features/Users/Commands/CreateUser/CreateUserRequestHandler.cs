@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 using UserOperationCaseStudy.Application.Interfaces;
 using UserOperationCaseStudy.Application.ValidationRules.FluentValidation.Users;
 using UserOperationCaseStudy.Common.Aspects.Autofac.Validation;
+using UserOperationCaseStudy.Common.Constants;
 using UserOperationCaseStudy.Common.Wrappers.Abstracts;
+using UserOperationCaseStudy.Common.Wrappers.Concretes;
+using UserOperationCaseStudy.Domain.Entities;
 
 namespace UserOperationCaseStudy.Application.Features.Users.Commands.CreateUser
 {
@@ -18,10 +21,13 @@ namespace UserOperationCaseStudy.Application.Features.Users.Commands.CreateUser
         {
         }
 
-        [ValidationAspect(typeof(CreateUserValidator))]
-        public Task<IResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+        [ValidationAspect(typeof(UpdateUserValidator))]
+        public async Task<IResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = iMapper.Map<User>(request);
+            await iRepository.AddAsync(user);
+
+            return new ServiceResponse(ResponseConstants.CREATE_ENTITY_SUCCESSFULLY);
         }
     }
 }

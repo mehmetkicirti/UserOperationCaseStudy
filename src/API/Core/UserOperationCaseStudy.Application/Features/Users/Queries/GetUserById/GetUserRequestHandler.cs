@@ -7,7 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using UserOperationCaseStudy.Application.Features.ViewModels;
 using UserOperationCaseStudy.Application.Interfaces;
+using UserOperationCaseStudy.Common.Constants;
+using UserOperationCaseStudy.Common.Exceptions;
 using UserOperationCaseStudy.Common.Wrappers.Abstracts;
+using UserOperationCaseStudy.Common.Wrappers.Concretes;
 
 namespace UserOperationCaseStudy.Application.Features.Users.Queries.GetUserById
 {
@@ -17,9 +20,15 @@ namespace UserOperationCaseStudy.Application.Features.Users.Queries.GetUserById
         {
         }
 
-        public Task<IDataResponse<UserViewModel>> Handle(GetUserRequest request, CancellationToken cancellationToken)
+        public async Task<IDataResponse<UserViewModel>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var user = await iRepository.GetByIdAsync(request.Id);
+            if (user == null)
+            {
+                throw new DatabaseException(ResponseConstants.ENTITY_NOT_EXIST);
+            }
+            var viewModel = iMapper.Map<UserViewModel>(user);
+            return new DataResponse<UserViewModel>(viewModel);
         }
     }
 }

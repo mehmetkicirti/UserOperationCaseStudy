@@ -13,10 +13,16 @@ namespace UserOperationCaseStudy.Common.Wrappers.Concretes
         {
             IsSuccess = isSuccess;
         }
-        public ServiceResponse(bool isSuccess, string message):this(isSuccess)
+        public ServiceResponse(string message):this(true)
         {
             Message = message;
         }
+
+        public ServiceResponse(string message, bool isSuccess) : this(isSuccess)
+        {
+            Message = message;
+        }
+
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
     }

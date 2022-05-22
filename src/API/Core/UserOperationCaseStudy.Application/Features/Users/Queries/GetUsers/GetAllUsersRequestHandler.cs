@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UserOperationCaseStudy.Application.Features.ViewModels;
 using UserOperationCaseStudy.Application.Interfaces;
 using UserOperationCaseStudy.Common.Wrappers.Abstracts;
+using UserOperationCaseStudy.Common.Wrappers.Concretes;
 
 namespace UserOperationCaseStudy.Application.Features.Users.Queries.GetUsers
 {
@@ -17,9 +18,13 @@ namespace UserOperationCaseStudy.Application.Features.Users.Queries.GetUsers
         {
         }
 
-        public Task<IDataResponse<IReadOnlyList<UserViewModel>>> Handle(GetAllUsersRequest request, CancellationToken cancellationToken)
+        public async Task<IDataResponse<IReadOnlyList<UserViewModel>>> Handle(GetAllUsersRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var users = await iRepository.GetAllAsync();
+            // Loading actions has been working or not 
+            await Task.Delay(1500);
+            var viewModel = iMapper.Map<IReadOnlyList<UserViewModel>>(users);
+            return new DataResponse<IReadOnlyList<UserViewModel>>(viewModel);
         }
     }
 }

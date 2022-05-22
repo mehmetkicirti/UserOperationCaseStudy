@@ -15,7 +15,7 @@ namespace UserOperationCaseStudy.Common.Repository
         Task<int> AddAsync(T entity);
         Task<IList<T>> GetAllAsync(bool isTracking = true);
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate, bool isTracking = true);
-        Task<T> GetById(string id, bool isTracking = true);
+        Task<T> GetByIdAsync(string id, bool isTracking = true);
         #endregion
 
 

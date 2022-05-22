@@ -13,11 +13,16 @@ namespace UserOperationCaseStudy.Common.Wrappers.Concretes
         {
         }
 
-        public DataResponse(string message) : base(true, message)
+        public DataResponse(string message) : base(message, true )
         {
         }
 
-        public DataResponse(string message, T data) : base(true, message)
+        public DataResponse(T data) : base(true)
+        {
+            Data = data;
+        }
+
+        public DataResponse(string message, T data) : base(message, true)
         {
             Data = data;
         }

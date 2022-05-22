@@ -42,7 +42,7 @@ namespace UserOperationCaseStudy.Common.Repository
         #region Async Ops.
         public async Task<IList<T>> GetAllAsync(bool isTracking = true) => await GetQuery(isTracking).ToListAsync();
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate, bool isTracking = true) => await GetQuery(isTracking).Where(predicate).ToListAsync();
-        public async Task<T> GetById(string id, bool isTracking = true) => await GetQuery(isTracking).FirstOrDefaultAsync(x => x.Id == Guid.Parse(id));
+        public async Task<T> GetByIdAsync(string id, bool isTracking = true) => await GetQuery(isTracking).FirstOrDefaultAsync(x => x.Id == Guid.Parse(id));
         public async Task<int> AddAsync(T entity)
         {
             await Context.AddAsync(entity);

@@ -35,7 +35,7 @@ namespace UserOperationCaseStudy.Persistence.Contexts
             }
 
             var users = GetUsers();
-            
+
             await context.AddRangeAsync(users);
 
             await context.SaveChangesAsync();

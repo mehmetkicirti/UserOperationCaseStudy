@@ -6,7 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserOperationCaseStudy.Application.Interfaces;
+using UserOperationCaseStudy.Common.Constants;
+using UserOperationCaseStudy.Common.Exceptions;
+using UserOperationCaseStudy.Common.Helpers.Application;
 using UserOperationCaseStudy.Common.Wrappers.Abstracts;
+using UserOperationCaseStudy.Common.Wrappers.Concretes;
 
 namespace UserOperationCaseStudy.Application.Features.Users.Commands.DeleteUser
 {
@@ -16,9 +20,16 @@ namespace UserOperationCaseStudy.Application.Features.Users.Commands.DeleteUser
         {
         }
 
-        public Task<IResponse> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
+        public async Task<IResponse> Handle(DeleteUserRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (ApplicationRules.RunLogicsAsync(IsUserExists(request.Id)) == null)
+            {
+                var user = await iRepository.GetByIdAsync(request.Id);
+                await Task.Factory.StartNew(() => iRepository.Delete(user));
+                return new ServiceResponse(ResponseConstants.DELETE_ENTITY_SUCCESFULLY);
+            }
+
+            throw new DatabaseException(ResponseConstants.DELETE_ENTITY_FAILED, BadRequestCode);
         }
     }
 }
