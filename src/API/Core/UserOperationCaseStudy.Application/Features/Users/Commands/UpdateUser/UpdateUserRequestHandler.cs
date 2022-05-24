@@ -28,12 +28,16 @@ namespace UserOperationCaseStudy.Application.Features.Users.Commands.UpdateUser
         {
             if (ApplicationRules.RunLogicsAsync(IsUserExists(request.Id)) == null)
             {
-                var user = await iRepository.GetByIdAsync(request.Id);
+                var user = await iRepository.GetByIdAsync(request.Id,false);
 
                 if (Guid.Parse(request.Id) == user.Id)
                 {
                     var newUser = iMapper.Map<User>(request);
+                    
+                    newUser.ImagePath = await FileHelper.UpdateAsync(user.ImagePath, request.Image);
+                    
                     await Task.Factory.StartNew(() => iRepository.Update(newUser));
+                    
                     return new ServiceResponse(ResponseConstants.UPDATE_ENTITY_SUCCESFULLY);
                 }
                 throw new DatabaseException(ExceptionConstants.RECORD_NOT_SAVED_ERROR);

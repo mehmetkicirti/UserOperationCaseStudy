@@ -25,6 +25,10 @@ namespace UserOperationCaseStudy.Application.Features.Users.Commands.DeleteUser
             if (ApplicationRules.RunLogicsAsync(IsUserExists(request.Id)) == null)
             {
                 var user = await iRepository.GetByIdAsync(request.Id);
+                
+                if (user.ImagePath != null)
+                    FileHelper.Delete(user.ImagePath);
+
                 await Task.Factory.StartNew(() => iRepository.Delete(user));
                 return new ServiceResponse(ResponseConstants.DELETE_ENTITY_SUCCESFULLY);
             }

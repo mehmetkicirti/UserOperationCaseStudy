@@ -15,7 +15,6 @@ namespace UserOperationCaseStudy.Application.ValidationRules.FluentValidation.Us
             RuleFor(u => u.Name).NotEmpty().MinimumLength(2).MaximumLength(75);
             RuleFor(u => u.Surname).NotEmpty().MinimumLength(2).MaximumLength(75);
             RuleFor(u => u.BirthDate).NotEmpty();
-            RuleFor(u => u.ImagePath).NotEmpty();
         }
     }
 }

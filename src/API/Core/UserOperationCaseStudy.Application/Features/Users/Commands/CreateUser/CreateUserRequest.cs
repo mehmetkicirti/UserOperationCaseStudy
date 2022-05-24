@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace UserOperationCaseStudy.Application.Features.Users.Commands.CreateUser
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string ImagePath { get; set; }
+        public IFormFile Image { get; set; }
         public DateTime BirthDate { get; set; }
     }
 }

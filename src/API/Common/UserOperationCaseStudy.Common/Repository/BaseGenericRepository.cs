@@ -34,6 +34,7 @@ namespace UserOperationCaseStudy.Common.Repository
         
         public int Update(T entity)
         {
+            Context.ChangeTracker.Clear();
             Context.Update(entity);
             return Context.SaveChanges();
         }

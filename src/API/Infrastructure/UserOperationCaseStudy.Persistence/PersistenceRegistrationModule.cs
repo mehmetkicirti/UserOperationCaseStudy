@@ -23,10 +23,10 @@ namespace UserOperationCaseStudy.Persistence
         protected override void Load(ContainerBuilder builder)
         {
             SeedData.SeedAsync(Configuration).GetAwaiter().GetResult();
-            builder.RegisterType<UserOperationDBContext>().AsSelf().As<DbContext>().SingleInstance();
+            builder.RegisterType<UserOperationDBContext>().AsSelf().As<DbContext>().InstancePerLifetimeScope();
 
             #region Setup Repositories
-            builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
+            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
             #endregion
         }
     }

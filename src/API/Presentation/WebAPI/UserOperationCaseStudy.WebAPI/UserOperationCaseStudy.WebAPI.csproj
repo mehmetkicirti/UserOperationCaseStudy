@@ -20,4 +20,8 @@
     <ProjectReference Include="..\..\..\Infrastructure\UserOperationCaseStudy.Persistence\UserOperationCaseStudy.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Uploads\" />
+  </ItemGroup>
+
 </Project>

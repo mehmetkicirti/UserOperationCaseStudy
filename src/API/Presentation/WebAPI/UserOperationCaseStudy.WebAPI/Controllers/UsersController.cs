@@ -17,7 +17,7 @@ namespace UserOperationCaseStudy.WebAPI.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<IActionResult> CreateUser([FromForm] CreateUserRequest request)
         {
             return Ok(await Mediator.Send(request));
         }
@@ -30,7 +30,7 @@ namespace UserOperationCaseStudy.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
+        public async Task<IActionResult> UpdateUser([FromForm] UpdateUserRequest request)
         {
             return Ok(await Mediator.Send(request));
         }
