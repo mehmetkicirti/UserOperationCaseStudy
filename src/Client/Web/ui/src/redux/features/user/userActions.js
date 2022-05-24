@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createBrowserHistory } from "history";
 import * as api from "../../api";
-
+const history = createBrowserHistory();
 export const getUserById = createAsyncThunk("users/getUserById", async ({id}, {rejectWithValue}) => {
     try {
         const response = await api.getByIdUser(id);
@@ -19,11 +20,14 @@ export const getUsers = createAsyncThunk("users/getUsers", async ({},{rejectWith
     }
 });
 
-export const createUser = createAsyncThunk("users/createUser", async ({formData, toast},{rejectWithValue}) => {
+export const createUser = createAsyncThunk("users/createUser", async ({formData, toast, setOpen},{rejectWithValue}) => {
     try {
         const response = await api.addUser(formData);
         toast.success(response.data.message);
+        setOpen(false);
+        toNavigate();
     } catch (error) {
+        setOpen(true);
         return rejectWithValue(getErrorMessage(error));
     }
 });
@@ -41,9 +45,17 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async ({id, toast
     try {
         const response = await api.deleteUser(id);
         toast.success(response.data.message);
+        toNavigate();
     } catch (error) {
         return rejectWithValue(getErrorMessage(error));
     }
 });
 
-const getErrorMessage = (error) => error.response.data ?? error; 
+const toNavigate = () => {
+    setTimeout(()=>{
+        history.push("/");
+        history.go();
+      },500);
+}
+
+const getErrorMessage = (error) => error.response.data ?? error.message; 

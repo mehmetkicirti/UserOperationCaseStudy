@@ -53,7 +53,7 @@ const userSlice = createSlice({
         },
         [createUser.rejected]: (state, action) => {
             state.loading = false;
-            state.error = action.payload.Message;
+            state.error = action.payload.Message ?? action.error.message;
         },
 /* Update User */
         [updateUser.pending]: (state, action) => {
@@ -66,7 +66,7 @@ const userSlice = createSlice({
         },
         [updateUser.rejected]: (state, action) => {
             state.loading = false;
-            state.error = action.payload.Message;
+            state.error = action.payload.Message ?? action.error.message;
         },
 /* Delete User */
         [deleteUser.pending]: (state, action) => {
@@ -79,7 +79,7 @@ const userSlice = createSlice({
         },
         [deleteUser.rejected]: (state, action) => {
             state.loading = false;
-            state.error = action.payload.Message;
+            state.error = action.payload.Message ?? action.error.message;
         },
     }
 });
